@@ -2,6 +2,7 @@
 require "ostruct"
 require 'erb'
 require 'yaml'
+require 'pathname'
 
 module QueryReviewer
   CONFIGURATION = {}
@@ -12,9 +13,9 @@ module QueryReviewer
     CONFIGURATION.merge!(default_config["all"] || {})
     CONFIGURATION.merge!(default_config[Rails.env || "test"] || {})
 
-    app_config_file = Rails.root + "config/query_reviewer.yml"
+    app_config_file = Rails.root + "/config/query_reviewer.yml"
 
-    if app_config_file.exist?
+    if Pathname.new(app_config_file).exist?
       app_config = YAML.load(ERB.new(IO.read(app_config_file)).result)
       CONFIGURATION.merge!(app_config["all"] || {})
       CONFIGURATION.merge!(app_config[Rails.env || "test"] || {})

@@ -17,7 +17,7 @@ module QueryReviewer
     end
 
     def query_review_output(ajax = false, total_time = nil)
-      faux_view = QueryViewBase.new([File.join(File.dirname(__FILE__), "views")], {}, self)
+      faux_view = QueryViewBase.new([File.join(Rails.root, "app/views/query_reviewer")], {}, self)
       queries = Thread.current["queries"]
       queries.analyze!
       faux_view.instance_variable_set("@queries", queries)
